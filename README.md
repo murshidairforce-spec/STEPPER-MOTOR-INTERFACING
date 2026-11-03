@@ -56,24 +56,19 @@ START:   MOV DI, 1200H        ; Initialize memory location to store array
 DOWN1:   MOV AL, [DI]         ; Copy the first data into AL
          OUT C0, AL           ; Send it through port address
 
-         MOV DX, 1010H        ; Delay subroutin# STEPPER MOTOR INTERFACING
+         MOV DX, 1010H        ; Delay subroutine
+L1:      DEC DX
+         JNZ L1
 
-## AIM
-To write an assembly language program in 8086 to rotate the motor at different speeds.
+         INC DI               ; Go to next memory location
+         LOOP DOWN1           ; Repeat until all data is sent
 
----
+         JMP START            ; Continuous rotation
 
-## APPARATUS REQUIRED
+         HLT                  ; Stop
 
-| S. No | Item                        | Specification   | Quantity |
-|-------|-----------------------------|-----------------|----------|
-| 1     | Microprocessor kit          | 8086            | 1        |
-| 2     | Power Supply                | +5 V DC, +12 V DC | 1      |
-| 3     | Stepper Motor Interface board | -             | 1        |
-| 4     | Stepper Motor               | -               | 1        |
-
----
-
+DATA:    DB 09H, 05H, 06H, 0AH ; Array of data
+```
 ## THEORY
 A motor in which the rotor is able to assume only discrete stationary angular positions is a **stepper motor**. The rotary motion occurs in a stepwise manner from one equilibrium position to the next.  
 
